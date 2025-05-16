@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import './App.css'
+
 function App () {
   const [tareas, setTareas] = useState([])
   const [nuevaTarea, setNuevaTarea] = useState('')
   const [duracion, setDuracion] = useState('')
+  const [filtroDuracion, setFiltroDuracion] = useState('') // Nuevo estado para el filtro
 
   // Función para agregar una nueva tarea
   const agregarTarea = () => {
@@ -23,6 +25,12 @@ function App () {
     console.log('Calculando tiempo total...')
     return tareas.reduce((total, tarea) => total + tarea.duracion, 0)
   }, [tareas]) // Solo se recalcula cuando cambian las tareas
+
+  // Filtrar tareas según la duración seleccionada
+  const tareasFiltradas = useMemo(() => {
+    if (!filtroDuracion) return tareas
+    return tareas.filter(t => t.duracion === parseInt(filtroDuracion))
+  }, [tareas, filtroDuracion])
 
   // Efecto secundario: Actualizar el título del documento cada vez que cambia el total
   useEffect(() => {
@@ -48,9 +56,20 @@ function App () {
         <button onClick={agregarTarea}>Agregar tarea</button>
       </div>
 
+      <div>
+        <label>Filtrar por duración:</label>
+        <input
+          type='number'
+          value={filtroDuracion}
+          onChange={e => setFiltroDuracion(e.target.value)}
+          placeholder='Duración exacta'
+        />
+        <button onClick={() => setFiltroDuracion('')}>Quitar filtro</button>
+      </div>
+
       <h2>Tareas</h2>
       <ul>
-        {tareas.map((tarea2, index) => (
+        {tareasFiltradas.map((tarea2, index) => (
           <li key={index}>{tarea2.nombre}: {tarea2.duracion} minutos</li>
         ))}
       </ul>
