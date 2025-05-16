@@ -5,16 +5,16 @@ function App () {
   const [nuevaTarea, setNuevaTarea] = useState('')
   const [duracion, setDuracion] = useState('')
 
-  // Efecto secundario: Actualizar el título del documento cada vez que cambia el total
-  useEffect(() => {
-    document.title = `Total: ${calcularTiempoTotal()} minutos`
-  }, [tareas])  // Se ejecuta cada vez que las tareas cambian
-
   // Cálculo de tiempo total optimizado con useMemo
-  const calcularTiempoTotal = useMemo(() => {
+  const tiempoTotal = useMemo(() => {
     console.log('Calculando tiempo total...')
     return tareas.reduce((total, tarea) => total + tarea.duracion, 0)
   }, [tareas]) // Solo se recalcula cuando cambian las tareas
+
+  // Efecto secundario: Actualizar el título del documento cada vez que cambia el total
+  useEffect(() => {
+    document.title = `Total: ${tiempoTotal} minutos`
+  }, [tiempoTotal])  // Se ejecuta cada vez que el tiempo total cambia
 
   // Función para agregar una nueva tarea
   const agregarTarea = () => {
@@ -55,7 +55,7 @@ function App () {
         ))}
       </ul>
 
-      <h3>Total de tiempo: {calcularTiempoTotal} minutos</h3>
+      <h3>Total de tiempo: {tiempoTotal} minutos</h3>
     </div>
   )
 }
