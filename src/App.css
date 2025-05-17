@@ -1,0 +1,21 @@
+.bg-warning-transparent {
+  background-color: rgba(255, 193, 7, 0.8) !important; /* amarillo Bootstrap con 80% de opacidad */
+}
+
+.btn.btn-secondary {
+  background-color: #dc3545 !important; /* rojo Bootstrap */
+  border-color: #dc3545 !important;
+  color: #fff !important;
+}
+
+.btn.btn-secondary:hover,
+.btn.btn-secondary:focus {
+  background-color: #b52a37 !important;
+  border-color: #b52a37 !important;
+  color: #fff !important;
+}
+
+.text-end.text-success {
+  color: #000 !important;
+}
+
